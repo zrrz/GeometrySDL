@@ -32,6 +32,8 @@ void Manager::Init()
 	model.Scale(Vector3(10.0f, 10.0f, 10.0f));
 	model.Rotate(Vector3(0.0f, 0.0f, 180.0f));
 	model.Translate(Vector3(SCREENWIDTH / 2.0f, SCREENHEIGHT / 2.0f, 0));
+
+	camera.UpdateMatrix();
 }
 
 bool Manager::Update()

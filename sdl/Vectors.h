@@ -17,6 +17,11 @@ public:
 	Vector3(const Vector3& other);
 	~Vector3();
 
+	const Vector3 Normalized();
+	const float Magnitude();
+
+	const Vector3 Cross(const Vector3& other) const;
+
 	// add/subtract
 	Vector3 operator+(const Vector3& other) const;
 	Vector3 operator-(const Vector3& other) const;
@@ -24,6 +29,9 @@ public:
 	// scalar multiplication
 	Vector3 operator*(float c) const;
 	friend Vector3 operator*(float c, const Vector3& v);
+
+	// scalar division
+	Vector3 operator/(float c) const;
 
 	// dot product
 	float operator*(const Vector3& other) const;

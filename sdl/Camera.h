@@ -18,6 +18,19 @@ public:
 	}
 
 	void UpdateMatrix() {
+
+		Matrix persectiveProj;
+		persectiveProj.m[10] = (s_nearClip + s_farClip) / s_nearClip;
+		persectiveProj.m[11] = -s_farClip;
+		persectiveProj.m[14] = 1.0f / s_nearClip;
+		persectiveProj.m[15] = 0;
+
+		Vector3 foo(20.0f, 30.0f, 40.0f);
+		
+
+		foo = persectiveProj * foo;
+		foo = foo / foo.w;
+
 		Vector3 up(0.0f, 1.0f, 0.0f);
 		//viewMat = Matrix.CreateLookAt(pos, lookAt, up);
 		matrix = viewMat.Inverse();

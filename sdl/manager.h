@@ -7,6 +7,7 @@
 #include "Vectors.h"
 #include "Model.h"
 #include "GraphicsDevice.h"
+#include "Camera.h"
 
 //const int NUMOBJS = 10;
 
@@ -32,6 +33,8 @@ public:
 private:
 	
 	GraphicsDevice graphicsDevice;
+
+	Camera camera;
 
 	Model model;
 	
