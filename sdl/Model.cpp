@@ -7,7 +7,8 @@ void Model::LoadContent(std::vector<Face> f, std::vector<Vector3> v, GraphicsDev
 }
 
 void Model::Draw() {
-	if(!showWire && !showFaces) 
+	
+	if (!showWire && !showFaces)
 		return;
 
 	std::vector<Vector3> t_verts(vertices);
@@ -21,7 +22,7 @@ void Model::Draw() {
 	int color = MAKE_COLOR(0, 255, 0, 255);
 
 	for (int i = 0, n = faces.size(); i < n; ++i) {
-		if(showFaces)
+		if (showFaces) 
 			graphicsDevice->DrawTriangle(t_verts[faces[i].a1 - 1], t_verts[faces[i].b1 - 1], t_verts[faces[i].c1 - 1]);
 
 		if(showWire) {

@@ -1,5 +1,7 @@
 #include "GraphicsDevice.h"
 
+#include <sstream>
+
 void Swap(void *, void *);
 
 GraphicsDevice::GraphicsDevice() {
@@ -12,9 +14,29 @@ void GraphicsDevice::Init()
 	//TTF_Init();
 	screen = SDL_SetVideoMode(SCREENWIDTH, SCREENHEIGHT, 32, SDL_SWSURFACE);
 	pixels = (Uint32*)screen->pixels;
+
+	txt_img = NULL;
+	txt_color.r = 255; 
+	txt_color.g = txt_color.b = 0;
+	txt_pos.x = txt_pos.y = 10;
+
+	TTF_Init();
+	font = TTF_OpenFont("fonts/arial.ttf", 24);
 }
 
 void GraphicsDevice::Draw() {
+	Uint32 now = SDL_GetTicks();
+	Uint32 dt = now - last;
+	last = now;
+
+	std::ostringstream out;
+	out << 1000.0f / dt;
+
+	txt = "FPS: " + out.str();
+	txt_img = TTF_RenderText_Solid(font, txt.c_str(), txt_color);
+	SDL_BlitSurface(txt_img, 0, screen, &txt_pos);
+	SDL_FreeSurface(txt_img);
+
 	SDL_Flip(screen);
 }
 
@@ -23,6 +45,18 @@ void GraphicsDevice::Clear() {
 }
 
 void GraphicsDevice::DrawTriangle(Vector3 v1, Vector3 v2, Vector3 v3) {
+
+	Vector3 lightVector(1, -1, 0);
+	lightVector = lightVector.Normalized();
+
+	Vector3 normal = (v2 - v1).Cross(v3 - v2);
+	normal = normal.Normalized();
+
+	float dot = lightVector * normal;
+	if (dot<0) dot = 0;
+	if (dot>1) dot = 1;
+
+	int color = MAKE_COLOR(0, 0, (int)(255 * dot), 255);
 
 	if (v1.y > v2.y) Swap(&v1, &v2);
 	if (v1.y > v3.y) Swap(&v1, &v3);
@@ -56,7 +90,7 @@ void GraphicsDevice::DrawTriangle(Vector3 v1, Vector3 v2, Vector3 v3) {
 			Left_dXdY = dXdY_v2v3;
 			LeftX = v2.x + SUB_PIX(v2.y)*Left_dXdY;
 			RightX = v1.x + preStep*Right_dXdY;
-			DrawSegment(y1i, y3i);
+			DrawSegment(y1i, y3i, color);
 			return;
 		}
 
@@ -64,13 +98,13 @@ void GraphicsDevice::DrawTriangle(Vector3 v1, Vector3 v2, Vector3 v3) {
 			Left_dXdY = dXdY_v1v2;
 			LeftX = v1.x + preStep*Left_dXdY;
 			RightX = v1.x + preStep*Right_dXdY;
-			DrawSegment(y1i, y2i);
+			DrawSegment(y1i, y2i, color);
 		}
 
 		if (y2i < y3i) {
 			Left_dXdY = dXdY_v2v3;
 			LeftX = v2.x + SUB_PIX(v2.y)*Left_dXdY;
-			DrawSegment(y2i, y3i);
+			DrawSegment(y2i, y3i, color);
 		}
 	}
 	else if (mid) {
@@ -84,7 +118,7 @@ void GraphicsDevice::DrawTriangle(Vector3 v1, Vector3 v2, Vector3 v3) {
 			Right_dXdY = dXdY_v2v3;
 			LeftX = v1.x + preStep*Left_dXdY;
 			RightX = v2.x + SUB_PIX(v2.y)*Right_dXdY;
-			DrawSegment(y1i, y3i);
+			DrawSegment(y1i, y3i, color);
 			return;
 		}
 
@@ -92,13 +126,13 @@ void GraphicsDevice::DrawTriangle(Vector3 v1, Vector3 v2, Vector3 v3) {
 			Right_dXdY = dXdY_v1v2;
 			LeftX = v1.x + preStep*Left_dXdY;
 			RightX = v1.x + preStep*Right_dXdY;
-			DrawSegment(y1i, y2i);
+			DrawSegment(y1i, y2i, color);
 		}
 
 		if (y2i<y3i) {
 			Right_dXdY = dXdY_v2v3;
 			RightX = v2.x + SUB_PIX(v2.y)*Right_dXdY;
-			DrawSegment(y2i, y3i);
+			DrawSegment(y2i, y3i, color);
 		}
 	}
 }
@@ -163,8 +197,7 @@ void GraphicsDevice::DrawPixel(Pixel pixel) {
 	pixels[((int)pixel.pos.y*SCREENWIDTH + (int)pixel.pos.x)] = pixel.color;
 }
 
-void GraphicsDevice::DrawSegment(long y1, long y2) {
-	int color = MAKE_COLOR(0, 0, 255, 255);
+void GraphicsDevice::DrawSegment(long y1, long y2, int color) {
 	for (long y = y1; y < y2; y++) {
 		long x1 = ceil(LeftX);
 		long x2 = ceil(RightX);

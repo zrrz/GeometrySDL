@@ -36,10 +36,18 @@ private:
 
 	void Swap(Vector3 *, Vector3 *);
 
-	void GraphicsDevice::DrawSegment(long, long);
+	void GraphicsDevice::DrawSegment(long, long, int);
 
 	SDL_Surface* screen;
 	Uint32* pixels;
+
+	TTF_Font*	font;
+	SDL_Color	txt_color;
+	SDL_Surface* txt_img;
+	SDL_Rect	txt_pos;
+	std::string txt;
+
+	Uint32 last;
 
 	float Left_dXdY, Right_dXdY, LeftX, RightX;
 };

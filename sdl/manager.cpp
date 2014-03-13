@@ -23,17 +23,22 @@ Manager::~Manager()
 void Manager::Init()
 {
 	SDL_Init( SDL_INIT_EVERYTHING );
-	TTF_Init();
+	//TTF_Init();
 	
 	graphicsDevice.Init();
 
+	// "Tri.obj"
+	// "Teddybear.obj"
+	// "Robot.obj"
+
 	LoadModel(&model, "Teddybear.obj");
 	
-	model.Scale(Vector3(10.0f, 10.0f, 10.0f));
+	model.Scale(Vector3(7.0f, 7.0f, 7.0f));
 	model.Rotate(Vector3(0.0f, 0.0f, 180.0f));
 	model.Translate(Vector3(SCREENWIDTH / 2.0f, SCREENHEIGHT / 2.0f, 0));
+	//model.Translate(Vector3(0, 150.0f, 0));
 
-	camera.UpdateMatrix();
+	//camera.UpdateMatrix();
 }
 
 bool Manager::Update()
@@ -43,7 +48,7 @@ bool Manager::Update()
 
 	graphicsDevice.Clear();
 
-	model.Rotate(Vector3(0.0f, 1.0f, 0.0f));
+	model.Rotate(Vector3(0.0f, 0.5f, 0.0f));
 	model.Draw();
 
 	graphicsDevice.Draw();
