@@ -15,8 +15,13 @@ public:
 	void Rotate(Vector3);
 	void Translate(Vector3);
 	void Scale(Vector3);
+
+	bool showWire, showFaces;
 private:
 	GraphicsDevice *graphicsDevice;
+	Matrix rotMat;
+	Matrix scaleMat;
+	Matrix transMat;
 	std::vector<Face> faces;
 	std::vector<Vector3> vertices;
 };

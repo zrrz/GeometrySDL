@@ -103,7 +103,7 @@ void GraphicsDevice::DrawTriangle(Vector3 v1, Vector3 v2, Vector3 v3) {
 	}
 }
 
-void GraphicsDevice::DrawLine(Vector3 start, Vector3 end) {
+void GraphicsDevice::DrawLine(Vector3 start, Vector3 end, int color) {
 	//float dist = sqrt( (end.x - start.x) * (end.x - start.x) + (end.y - start.y)*(end.y - start.y));
 	float dx = abs(start.x - end.x);
 	float dy = abs(start.y - end.y);
@@ -149,7 +149,8 @@ void GraphicsDevice::DrawLine(Vector3 start, Vector3 end) {
 				DrawPixel(pixel);
 			}
 		}
-		pixel.color = MAKE_COLOR((int)(255 * perc), 0, 0, 0);
+		//pixel.color = MAKE_COLOR((int)(255 * perc), 0, 0, 0);
+		pixel.color = color;
 		DrawPixel(pixel);
 	}
 }
@@ -163,11 +164,12 @@ void GraphicsDevice::DrawPixel(Pixel pixel) {
 }
 
 void GraphicsDevice::DrawSegment(long y1, long y2) {
+	int color = MAKE_COLOR(0, 0, 255, 255);
 	for (long y = y1; y < y2; y++) {
 		long x1 = ceil(LeftX);
 		long x2 = ceil(RightX);
 
-		DrawLine(Vector3(x1, y, 1), Vector3(x2, y, 1));
+		DrawLine(Vector3(x1, y, 1), Vector3(x2, y, 1), color);
 		LeftX += Left_dXdY;
 		RightX += Right_dXdY;
 	}

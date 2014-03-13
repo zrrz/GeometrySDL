@@ -96,40 +96,6 @@ void Manager::LoadModel(Model* model, std::string fileName) {
 	model->LoadContent(faces, vectors, &graphicsDevice);
 }
 
-//void Manager::DrawModel() {
-//	for (int i = 0, n = faces.size(); i < n; ++i) {
-//		Matrix scale;
-//		scale.m[0] = scale.m[5] = scale.m[10] = 10;
-//
-//		Matrix center;
-//		center.m[3] = SCREENWIDTH/2;
-//		center.m[7] = SCREENHEIGHT/2;
-//
-//		Matrix rotate;
-//		float theta = 180 * (PI/180.0f);
-//		//theta += 0.1*(PI/180.0f);
-//		rotate.m[0] = cos(theta);
-//		rotate.m[1] = -(sin(theta));
-//		rotate.m[4] = sin(theta);
-//		rotate.m[5] = cos(theta);
-//
-//		Matrix rotate2;
-//		static float theta2 = 180 * (PI / 180.0f);
-//		theta2 += 0.0005*(PI/180.0f);
-//		rotate.m[0] = cos(theta2);
-//		rotate.m[2] = sin(theta2);
-//		rotate.m[8] = -(sin(theta2));
-//		rotate.m[10] = cos(theta2);
-//
-//		Matrix allTransforms = center * scale * rotate;
-//		//allTransforms = allTransforms * allTransforms.Inverse();
-//
-//		DrawLine(allTransforms * vectors[faces[i].a1 - 1], allTransforms * vectors[faces[i].b1 - 1]);
-//		DrawLine(allTransforms * vectors[faces[i].a1 - 1], allTransforms * vectors[faces[i].c1 - 1]);
-//		DrawLine(allTransforms * vectors[faces[i].b1 - 1], allTransforms * vectors[faces[i].c1 - 1]);
-//	}
-//}
-
 bool Manager::KeyUpdate()
 {
 	SDL_Event keyevent;
@@ -182,6 +148,11 @@ bool Manager::KeyDown(SDLKey key)
 	case ']':
 		break;
 	case 'w':
+		model.showWire = !model.showWire;
+		break;
+	case 'f':
+		model.showFaces = !model.showFaces;
+		break;
 	case SDLK_UP:
 		keys[UP] = true;
 		break;

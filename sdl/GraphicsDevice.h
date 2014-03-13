@@ -14,7 +14,7 @@ const int SCREENHEIGHT = 480;
 const int FPS = 60;
 
 struct Pixel {
-	Vector2 pos;
+	Vector3 pos;
 	int color;
 };
 
@@ -28,7 +28,7 @@ public:
 
 	void DrawTriangle(Vector3, Vector3, Vector3);
 
-	void DrawLine(Vector3, Vector3);
+	void DrawLine(Vector3, Vector3, int);
 
 	void DrawPixel(Pixel);
 

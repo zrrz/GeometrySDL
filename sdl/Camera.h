@@ -9,6 +9,8 @@ class Camera {
 
 public:
 	Camera() {
+		s_nearClip = 1.0f;
+		s_farClip = 10000.0f;
 		Vector3 zero;
 		position = zero;
 		Vector3 forward(0.0f, 0.0f, 1.0f);
@@ -40,8 +42,8 @@ public:
 	}
 private:
 
-	const float s_nearClip = 1.0f;
-	const float s_farClip = 10000.0f;
+	float s_nearClip;
+	float s_farClip;
 
 	Vector3 position;
 	Vector3 lookAt;
