@@ -6,6 +6,8 @@
 
 #define MAKE_COLOR(R,G,B,A) ( (((B)&0xFF)<<0) | (((G)&0xFF)<<8) | (((R)&0xFF)<<16) | (((A)&0xFF)<<24) )
 
+#define SUB_PIX(a) (ceil(a)-a)
+
 const int SCREENWIDTH = 640;
 const int SCREENHEIGHT = 480;
 
@@ -24,13 +26,22 @@ public:
 	void Draw();
 	void Clear();
 
+	void DrawTriangle(Vector3, Vector3, Vector3);
+
 	void DrawLine(Vector3, Vector3);
 
 	void DrawPixel(Pixel);
 
 private:
+
+	void Swap(Vector3 *, Vector3 *);
+
+	void GraphicsDevice::DrawSegment(long, long);
+
 	SDL_Surface* screen;
 	Uint32* pixels;
+
+	float Left_dXdY, Right_dXdY, LeftX, RightX;
 };
 
 #endif

@@ -9,9 +9,11 @@ void Model::LoadContent(std::vector<Face> f, std::vector<Vector3> v, GraphicsDev
 void Model::Draw() {
 	for (int i = 0, n = faces.size(); i < n; ++i) {
 
-		graphicsDevice->DrawLine(vertices[faces[i].a1 - 1], vertices[faces[i].b1 - 1]);
-		graphicsDevice->DrawLine(vertices[faces[i].a1 - 1], vertices[faces[i].c1 - 1]);
-		graphicsDevice->DrawLine(vertices[faces[i].b1 - 1], vertices[faces[i].c1 - 1]);
+		//graphicsDevice->DrawLine(vertices[faces[i].a1 - 1], vertices[faces[i].b1 - 1]);
+		//graphicsDevice->DrawLine(vertices[faces[i].a1 - 1], vertices[faces[i].c1 - 1]);
+		//graphicsDevice->DrawLine(vertices[faces[i].b1 - 1], vertices[faces[i].c1 - 1]);
+
+		graphicsDevice->DrawTriangle(vertices[faces[i].a1 - 1], vertices[faces[i].b1 - 1], vertices[faces[i].c1 - 1]);
 	}
 }
 
