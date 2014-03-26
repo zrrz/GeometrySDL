@@ -32,14 +32,17 @@ public:
 
 	void DrawPixel(Pixel);
 
+	void ClearZBuffer();
+
 private:
 
 	void Swap(Vector3 *, Vector3 *);
 
-	void GraphicsDevice::DrawSegment(long, long, int, float, float, float, float, float, float, float, float);
+	void GraphicsDevice::DrawSegment(long, long, int, float, float, float, float, float, float, float);
 
 	SDL_Surface* screen;
 	Uint32* pixels;
+	Uint32* zBuffer;
 
 	TTF_Font*	font;
 	SDL_Color	txt_color;
@@ -48,8 +51,6 @@ private:
 	std::string txt;
 
 	Uint32 last;
-
-	//float Left_dXdY, Right_dXdY, LeftX, RightX;
 };
 
 #endif

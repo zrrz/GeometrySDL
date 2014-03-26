@@ -31,7 +31,7 @@ void Manager::Init()
 	// "Teddybear.obj"
 	// "Robot.obj"
 
-	LoadModel(&model, "Teddybear.obj");
+	LoadModel(&model, "Tri.obj");
 	
 	model.Scale(Vector3(7.0f, 7.0f, 7.0f));
 	model.Rotate(Vector3(0.0f, 0.0f, 180.0f));
@@ -48,7 +48,7 @@ bool Manager::Update()
 
 	graphicsDevice.Clear();
 
-	model.Rotate(Vector3(0.0f, 0.5f, 0.0f));
+	model.Rotate(Vector3(0.0f, 0.1f, 0.0f));
 	model.Draw();
 
 	graphicsDevice.Draw();
