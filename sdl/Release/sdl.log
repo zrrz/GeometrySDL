@@ -1,0 +1,24 @@
+﻿Build started 3/15/2014 12:48:28 PM.
+     1>Project "C:\Users\Zack\Documents\GeometrySDL\sdl\sdl.vcxproj" on node 2 (Build target(s)).
+     1>ClCompile:
+         C:\Program Files (x86)\Microsoft Visual Studio 13.0\VC\bin\CL.exe /c /I"C:\Users\Zack\Documents\GeometrySDL\sdl\\SDL-1.2.15\include" /Zi /nologo /W3 /WX- /MP /O2 /Oi /Oy- /GL /D _MBCS /Gm- /EHsc /MD /GS /Gy /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Release\\" /Fd"Release\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt GraphicsDevice.cpp
+         GraphicsDevice.cpp
+     1>GraphicsDevice.cpp(71): warning C4244: 'initializing' : conversion from 'float' to 'long', possible loss of data
+     1>GraphicsDevice.cpp(72): warning C4244: 'initializing' : conversion from 'float' to 'long', possible loss of data
+     1>GraphicsDevice.cpp(73): warning C4244: 'initializing' : conversion from 'float' to 'long', possible loss of data
+     1>GraphicsDevice.cpp(212): warning C4244: 'initializing' : conversion from 'float' to 'long', possible loss of data
+     1>GraphicsDevice.cpp(213): warning C4244: 'initializing' : conversion from 'float' to 'long', possible loss of data
+     1>GraphicsDevice.cpp(215): warning C4244: 'argument' : conversion from 'long' to 'float', possible loss of data
+       Link:
+         C:\Program Files (x86)\Microsoft Visual Studio 13.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"C:\Users\Zack\Documents\GeometrySDL\sdl\Release\sdl.exe" /INCREMENTAL:NO /NOLOGO /LIBPATH:"C:\Users\Zack\Documents\GeometrySDL\sdl\\SDL-1.2.15\lib\x86" SDL.lib SDL_gfx.lib SDL_image.lib SDL_ttf.lib SDLmain.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"C:\Users\Zack\Documents\GeometrySDL\sdl\Release\sdl.pdb" /OPT:REF /OPT:ICF /LTCG /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:\Users\Zack\Documents\GeometrySDL\sdl\Release\sdl.lib" /MACHINE:X86 /SAFESEH Release\GraphicsDevice.obj
+         Release\manager.obj
+         Release\main.obj
+         Release\Matrix.obj
+         Release\Model.obj
+         Release\Vectors.obj
+     1>LINK : fatal error LNK1561: entry point must be defined
+     1>Done Building Project "C:\Users\Zack\Documents\GeometrySDL\sdl\sdl.vcxproj" (Build target(s)) -- FAILED.
+
+Build FAILED.
+
+Time Elapsed 00:00:01.48

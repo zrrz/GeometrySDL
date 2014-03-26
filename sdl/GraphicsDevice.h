@@ -36,7 +36,7 @@ private:
 
 	void Swap(Vector3 *, Vector3 *);
 
-	void GraphicsDevice::DrawSegment(long, long, int);
+	void GraphicsDevice::DrawSegment(long, long, int, float, float, float, float, float, float, float, float);
 
 	SDL_Surface* screen;
 	Uint32* pixels;
@@ -49,7 +49,7 @@ private:
 
 	Uint32 last;
 
-	float Left_dXdY, Right_dXdY, LeftX, RightX;
+	//float Left_dXdY, Right_dXdY, LeftX, RightX;
 };
 
 #endif
