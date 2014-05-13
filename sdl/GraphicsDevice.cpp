@@ -73,15 +73,17 @@ void GraphicsDevice::DrawTriangle(Vector3 v1, Vector3 v2, Vector3 v3) {
 	//if (camDir*normal > 1.0f)
 	//	return;
 
-	//Vector3 camDir(0.0f, 0.0f, 1.0f);	
-	//if (camDir*normal > 1.0f)
-	//	return;
+	Vector3 camDir(0.0f, 0.0f, 1.0f);	
+	if (camDir*normal > 1.0f)
+		return;
 
 	float dot = lightVector * normal;
 	if (dot<0) dot = 0;
 	if (dot>1) dot = 1;
 
-	int color = MAKE_COLOR(0, 0, (int)(255 * dot), 255);
+
+	int color = MAKE_COLOR(0, 0, rand() % 255, 0);
+	//int color = MAKE_COLOR(0, 0, (int)(255 * dot), 255);
 
 	if (v1.y > v2.y) Swap(&v1, &v2);
 	if (v1.y > v3.y) Swap(&v1, &v3);
@@ -94,57 +96,73 @@ void GraphicsDevice::DrawTriangle(Vector3 v1, Vector3 v2, Vector3 v3) {
 	if (y1i == y3i)
 		return;
 
-	float preStep;
-
 	float dXdY_v1v3 = (v3.x - v1.x) / (v3.y - v1.y);
 	float dXdY_v2v3 = (v3.x - v2.x) / (v3.y - v2.y);
 	float dXdY_v1v2 = (v2.x - v1.x) / (v2.y - v1.y);
 
+	//float leftX, rightX;
+	//float leftZ, rightZ;
+	//float left_dxdy, right_dxdy;
+
+	//if (v1.x < v2.x && v1.x < v3.x) {
+	//	leftX = v1.x;
+	//	rightX = v1.x;
+	//	left_dxdy = dXdY_v1v3;
+	//	right_dxdy = dXdY_v1v2;
+	//	DrawSegment2(y1i, y2i, leftX, rightX, left_dxdy, right_dxdy);
+	//	leftX += left_dxdy*(v1.y - v2.y);
+	//	rightX = v2.x;
+	//	right_dxdy = dXdY_v2v3;
+	//	DrawSegment2(y2i, y3i, leftX, rightX, left_dxdy, right_dxdy);
+	//}
+
+	float preStep;
+
 	float dZdY_v1v3 = (v3.z - v1.z) / (v3.y - v1.y);
 	float dZdY_v2v3 = (v3.z - v2.z)	/ (v3.y - v2.y);
 	float dZdY_v1v2 = (v2.z - v1.z) / (v2.y - v1.y);
-
+	
 	bool mid = dXdY_v1v3<dXdY_v1v2;
-
+	
 	float Right_dXdY, Left_dXdY;
 	float LeftX, RightX;
-
+	
 	float Left_dZdY;
 	float LeftZ;
-
+	
 	float z_a = 1.0 / v1.z;
 	float z_b = 1.0 / v2.z;
 	float z_c = 1.0 / v3.z;
-
+	
 	float denom = ((v3.x - v1.x) * (v2.y - v1.y)
 		- (v2.x - v1.x) * (v3.y - v1.y));
-
+	
 	if (!denom) return;
-
+	
 	denom = 1.0f / denom;
-
+	
 	float PK_dzdx = ((z_c - z_a) * (v2.y - v1.y) - (z_b - z_a)
 		* (v3.y - v1.y))*denom;
-
+	
 	PK_dzdx = PK_dzdx*SUB_DIVIDE_SIZE;
-
+	
 	// if dXdY_V1V3 slope is bigger than dXdY_V1V2
-	// then v2 is at the left side of triangle
+	 //then v2 is at the left side of triangle
 	if (!mid) {
 		// v2 is at the left side
-
+	
 		preStep = SUB_PIX(v1.y);	
-
+	
 		Right_dXdY = dXdY_v1v3;
-
+	
 		if (y1i == y2i) {
 			Left_dXdY = dXdY_v2v3;
 			LeftX = v2.x + SUB_PIX(v2.y)*Left_dXdY;
 			RightX = v1.x + preStep*Right_dXdY;
-
+	
 			Left_dZdY = dZdY_v2v3;
 			LeftZ = z_b + SUB_PIX(v2.y)*Left_dZdY;
-
+	
 			DrawSegment(y1i, y3i, color, Left_dXdY, Right_dXdY, LeftX, RightX, Left_dZdY, LeftZ, PK_dzdx);
 			return;
 		}
@@ -153,63 +171,65 @@ void GraphicsDevice::DrawTriangle(Vector3 v1, Vector3 v2, Vector3 v3) {
 				Left_dXdY = dXdY_v1v2;
 				LeftX = v1.x + preStep*Left_dXdY;
 				RightX = v1.x + preStep*Right_dXdY;
-
+	
 				Left_dZdY = dZdY_v1v2;
 				LeftZ = z_a + preStep * Left_dZdY;
 				
 				DrawSegment(y1i, y2i, color, Left_dXdY, Right_dXdY, LeftX, RightX, Left_dZdY, LeftZ, PK_dzdx);
 			}
-
+	
 			if (y2i < y3i) {
 				Left_dXdY = dXdY_v2v3;
 				LeftX = v2.x + SUB_PIX(v2.y)*Left_dXdY;
 				RightX = v1.x + preStep*Right_dXdY + (Right_dXdY*(y2i - y1i));
-
+	
 				Left_dZdY = dZdY_v2v3;
 				LeftZ = z_b + SUB_PIX(v2.y)*Left_dZdY;
-
+	
 				DrawSegment(y2i, y3i, color, Left_dXdY, Right_dXdY, LeftX, RightX, Left_dZdY, LeftZ, PK_dzdx);
 			}
 		}
 	}
-	else if (mid) {
+	else 
+	if (mid) {
 		// v2 is at the right side
-
+	
 		preStep = SUB_PIX(v1.y);
-
+	
 		Left_dXdY = dXdY_v1v3;
-
+	
 		if (y1i == y2i) {
 			Right_dXdY = dXdY_v2v3;
 			LeftX = v1.x + preStep*Left_dXdY;
 			RightX = v2.x + SUB_PIX(v2.y)*Right_dXdY;
-
+	
 			Left_dZdY = dZdY_v1v3;
 			LeftZ = z_a + preStep*Left_dZdY;
-
+	
 			DrawSegment(y1i, y3i, color, Left_dXdY, Right_dXdY, LeftX, RightX, Left_dZdY, LeftZ, PK_dzdx);
 			return;
 		}
 		else {
+	
+			Left_dXdY = dXdY_v1v3;
+			Left_dZdY = dZdY_v1v3;
+			
 			if (y1i < y2i) {
 				Right_dXdY = dXdY_v1v2;
 				LeftX = v1.x + preStep*Left_dXdY;
 				RightX = v1.x + preStep*Right_dXdY;
-
-				Left_dZdY = dZdY_v1v3;
-				LeftZ = v1.x + preStep*Left_dZdY;
-
+	
+				LeftZ = z_a + preStep*Left_dZdY;
+	
 				DrawSegment(y1i, y2i, color, Left_dXdY, Right_dXdY, LeftX, RightX, Left_dZdY, LeftZ, PK_dzdx);
+				LeftZ += Left_dZdY * (y2i - y1i);
+				LeftX += Left_dXdY * (y2i - y1i);
 			}
-
+	
 			if (y2i < y3i) {
 				Right_dXdY = dXdY_v2v3;
-				RightX = v2.x + SUB_PIX(v2.y)*Right_dXdY;
-				LeftX = v1.x + preStep*Left_dXdY + (Left_dXdY*(y2i - y1i));
-
-				Left_dZdY = dZdY_v1v3;
-				LeftZ = v1.x + preStep*Left_dZdY;
-
+				RightX = v2.x + SUB_PIX(v2.y)*Right_dXdY;			
+	
 				DrawSegment(y2i, y3i, color, Left_dXdY, Right_dXdY, LeftX, RightX, Left_dZdY, LeftZ, PK_dzdx);
 			}
 		}
@@ -290,6 +310,17 @@ void GraphicsDevice::DrawSegment(long y1, long y2, int color, float Left_dXdY, f
 		RightX += Right_dXdY;
 
 		LeftZ += Left_dZdY;
+	}
+}
+
+void GraphicsDevice::DrawSegment2(long y0, long y1, float leftX, float rightX, float left_dxdy, float right_dxdy) {
+	float x0 = leftX;
+	float x1 = rightX;
+	Uint32 color = MAKE_COLOR(rand() % 255, rand() % 255, rand() % 255, 0);
+	for (int y = y0; y < y1; y++) {
+		DrawLine(Vector3(x0, y, 1), Vector3(x1, y, 1), color);
+		x0 += left_dxdy;
+		x1 += right_dxdy;
 	}
 }
 

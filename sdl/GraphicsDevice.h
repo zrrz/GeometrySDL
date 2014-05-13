@@ -8,8 +8,8 @@
 
 #define SUB_PIX(a) (ceil(a)-a)
 
-const int SCREENWIDTH = 640;
-const int SCREENHEIGHT = 480;
+const int SCREENWIDTH = 1366;
+const int SCREENHEIGHT = 768;
 
 const int FPS = 60;
 
@@ -38,7 +38,9 @@ private:
 
 	void Swap(Vector3 *, Vector3 *);
 
-	void GraphicsDevice::DrawSegment(long, long, int, float, float, float, float, float, float, float);
+	void DrawSegment(long, long, int, float, float, float, float, float, float, float);
+
+	void DrawSegment2(long, long, float, float, float, float);
 
 	SDL_Surface* screen;
 	Uint32* pixels;

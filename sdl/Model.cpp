@@ -19,7 +19,7 @@ void Model::Draw() {
 	Matrix allMats = transMat * rotMat * scaleMat;
 
 	int n = t_verts.size();
-#pragma omp parallel for	
+//#pragma omp parallel for	
 	for (int i = 0; i < n; i++) {
 		t_verts[i] = allMats * vertices[i];
 	}
@@ -27,7 +27,7 @@ void Model::Draw() {
 	int color = MAKE_COLOR(0, 255, 0, 255);
 
 	int n2 = faces.size();
-//#pragma omp parallel for
+#pragma omp parallel for
 	for (int i = 0; i < n2; ++i) {
 		Vector3 v1 = t_verts[faces[i].a1 - 1];
 		Vector3 v2 = t_verts[faces[i].b1 - 1];
@@ -36,18 +36,17 @@ void Model::Draw() {
 		Vector3 normal = (v2 - v1).Cross(v3 - v2);
 		normal = normal.Normalized();
 
-		//Vector3 camDir(0.0f, 0.0f, 1.0f);
-		//if (!(camDir*normal > 1.0f)) {
+		Vector3 camDir(0.0f, 0.0f, 1.0f);
+		if (!(camDir*normal > 1.0f)) {
+			if (showFaces)
+				graphicsDevice->DrawTriangle(v1, v2, v3);
 
-		if (showFaces)
-			graphicsDevice->DrawTriangle(v1, v2, v3);
-
-		if (showWire) {
-			graphicsDevice->DrawLine(v1, v2, color);
-			graphicsDevice->DrawLine(v1, v3, color);
-			graphicsDevice->DrawLine(v2, v3, color);
+			if (showWire) {
+				graphicsDevice->DrawLine(v1, v2, color);
+				graphicsDevice->DrawLine(v1, v3, color);
+				graphicsDevice->DrawLine(v2, v3, color);
+			}
 		}
-		//}
 	}
 }
 

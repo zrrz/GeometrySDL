@@ -1,5 +1,4 @@
 #include "manager.h"
-#include <fstream>
 #include <queue>
 #include "math.h"
 #include <sstream>
@@ -31,9 +30,9 @@ void Manager::Init()
 	// "Teddybear.obj"
 	// "Robot.obj"
 
-	LoadModel(&model, "Tri.obj");
+	LoadModel(&model, "Teddybear.obj");
 	
-	model.Scale(Vector3(7.0f, 7.0f, 7.0f));
+	model.Scale(Vector3(11.0f, 11.0f, 11.0f));
 	model.Rotate(Vector3(0.0f, 0.0f, 180.0f));
 	model.Translate(Vector3(SCREENWIDTH / 2.0f, SCREENHEIGHT / 2.0f, 0));
 	//model.Translate(Vector3(0, 150.0f, 0));
